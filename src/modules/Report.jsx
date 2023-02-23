@@ -11,7 +11,7 @@ function Report(){
         <div className="App-header">
           <div style={{display: 'flex',gap: '30px',justifyContent: 'center',marginTop: '5%'}}>
               <motion.div whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
-                <Link to="/submit"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Add Students</Button></Link>
+                <Link to="/submit"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Input Student Data</Button></Link>
               </motion.div>
               <motion.div whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
                 <Link to="/"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Help Tab</Button></Link>
