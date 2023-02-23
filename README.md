@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+###Mantine:
+NPM Library for Components in React Documentation: https://mantine.dev/pages/getting-started/
+
+###Framer Motion
+NPM Library for React Animation and Complete documentation of the Framer Motion animation library: 
+https://www.framer.com/motion/
+
+##NPM 
+A CMD program for install and organizing libraries and code from other programers: https://www.npmjs.com/
+
+
