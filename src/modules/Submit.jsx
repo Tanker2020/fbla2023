@@ -10,7 +10,7 @@ function Submit(){
           <div>
             <div style={{display: 'flex',gap: '30px',justifyContent: 'center',marginTop: '5%'}}>
                 <motion.div whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
-                  <Link to="/submit"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Sumbit Form</Button></Link>
+                  <Link to="/submit"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Add Students</Button></Link>
                 </motion.div>
                 <motion.div whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
                   <Link to="/"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Help Tab</Button></Link>
@@ -220,7 +220,7 @@ function Quarter(props){
   return (
     <div>
       <Group style={{justifyContent: 'center'}}>
-            <TextInput value={props.nameData} onChange={(event) => props.setNameData(event.currentTarget.value)} label="Name" placeholder="Student Name" style={{width: 200}} withAsterisk/>
+            <TextInput value={props.nameData} onChange={(event) => props.setNameData(event.currentTarget.value)} label="Name" placeholder="John Doe" style={{width: 200}} withAsterisk/>
             <Select withAsterisk
               label="Grade"
               placeholder="Pick one"
@@ -244,62 +244,10 @@ function Quarter(props){
               breakpoint="sm"
             />
         </Group>
-        <motion.div style={{margin: '5%'}}>
+        <motion.div style={{margin: '5%',display: 'inline-block'}} whileHover={{scale: 1.2}} whileTap={{scale: 0.8}}>
           <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}} onClick={props.SendData}>Add Student</Button>
         </motion.div>
-        <Random quarter={props.quarter} />
     </div>
   )
 }
-
-function Random(props){
-
-  const [show , setShow] = useState(false)
-
-  const [randomPerson, setRandomPerson] = useState({
-    name: '',
-    grade: 0,
-    points: 0
-  }
-  )
-
-  function getRandomPerson(quarter){
-    window.electron.notificationApi.receiveSQL('Select * from quarter'+quarter+" ORDER BY RANDOM() LIMIT 1").then((data)=>{
-      if (data.length != 0){
-        setRandomPerson({
-          name: data[0].name,
-          grade: data[0].grade,
-          points: data[0].points
-        })
-        setShow(true)
-      }else {
-        window.electron.notificationApi.sendError('The Database is Empty for this Quarter')
-      }
-    })
-  }
-
-  return (
-    <div>
-      <h1>Get Random Winner From Quarter {props.quarter}</h1>
-      <div style={{minWidth: '20%',width: '50%',margin: 'auto',marginBottom: '5%'}}>
-        <Table horizontalSpacing="xl" highlightOnHover withColumnBorders>
-          <tr>
-            <th >Name</th>
-            <th >Grade</th>
-            <th >Points</th>
-          </tr>
-          <tbody>
-            <tr>
-              <td>{show ? randomPerson?.name:''}</td>
-              <td>{show ? randomPerson?.grade:''}</td>
-              <td>{show ? randomPerson?.points:''}</td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-      <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200,marginBottom: '10%'}} onClick={()=>setRandomPerson(getRandomPerson(props.quarter))}>Get Random Winner</Button>
-    </div>
-  )
-}
-
 export default Submit

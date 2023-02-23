@@ -1,5 +1,4 @@
 import './App.css';
-import Home from './modules/Home'
 import Help from './modules/Tracker'
 import Submit from './modules/Submit'
 import Report from './modules/Report'

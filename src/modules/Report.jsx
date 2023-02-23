@@ -11,7 +11,7 @@ function Report(){
         <div className="App-header">
           <div style={{display: 'flex',gap: '30px',justifyContent: 'center',marginTop: '5%'}}>
               <motion.div whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
-                <Link to="/submit"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Sumbit Form</Button></Link>
+                <Link to="/submit"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Add Students</Button></Link>
               </motion.div>
               <motion.div whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
                 <Link to="/"><Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200}}>Help Tab</Button></Link>
@@ -235,7 +235,10 @@ function ShowWinner(props){
 
     return(
         <div>
-            <div style={{display: 'flex',gap: '30px',justifyContent: 'center',marginTop: '5%'}}>
+            <Random quarter={props.quarter}/>
+            <hr style={{border: '1px dashed aqua'}}></hr>
+            <h1 style={{fontSize: 20}}>Quarter {props.quarter} Report For Each Grade</h1>
+            <div style={{display: 'flex',gap: '30px',justifyContent: 'center',marginTop: '2%'}}>
             {/*9th Grade*/}
             <h1 style={{fontSize: 20}}>9th Grade</h1>
             <motion.div style={{display: 'inline-block'}} whileHover={{scale: 1.2}} whileTap={{ scale: 0.9 }}>
@@ -311,9 +314,63 @@ function ShowWinner(props){
             </Table>
         </Modal>
         </div>
+        <div style={{marginBottom: '5%'}}></div>
         </div>
     )
 }
+
+function Random(props){
+
+    const [show , setShow] = useState(false)
+  
+    const [randomPerson, setRandomPerson] = useState({
+      name: '',
+      grade: 0,
+      points: 0
+    }
+    )
+  
+    function getRandomPerson(quarter){
+      window.electron.notificationApi.receiveSQL('Select * from quarter'+quarter+" ORDER BY RANDOM() LIMIT 1").then((data)=>{
+        if (data.length != 0){
+          setRandomPerson({
+            name: data[0].name,
+            grade: data[0].grade,
+            points: data[0].points
+          })
+          setShow(true)
+        }else {
+          window.electron.notificationApi.sendError('The Database is Empty for this Quarter')
+        }
+      })
+    }
+  
+    return (
+      <div>
+        <h1>Get Random Winner From Quarter {props.quarter}</h1>
+        <div style={{minWidth: '20%',width: '50%',margin: 'auto',marginBottom: '5%'}}>
+          <Table horizontalSpacing="xl" highlightOnHover withColumnBorders>
+            <tr>
+              <th >Name</th>
+              <th >Grade</th>
+              <th >Points</th>
+            </tr>
+            <tbody>
+              <tr>
+                <td>{show ? randomPerson?.name:''}</td>
+                <td>{show ? randomPerson?.grade:''}</td>
+                <td>{show ? randomPerson?.points:''}</td>
+              </tr>
+            </tbody>
+          </Table>
+        </div>
+        <motion.div style={{display: 'inline-block'}} whileHover={{scale: 1.2}} whileTap={{scale: 0.8}}>
+            <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} style={{width: 200,marginBottom: '10%'}} onClick={()=>setRandomPerson(getRandomPerson(props.quarter))}>Get Random Winner</Button>
+        </motion.div>
+      </div>
+    )
+  }
+  
 
 function ShowReport(){
 
